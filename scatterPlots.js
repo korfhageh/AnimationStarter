@@ -13,11 +13,24 @@ var drawScatter = function(students,target,
 
     setBanner(xProp.toUpperCase() +" vs "+ yProp.toUpperCase());
     
+    var circles = d3.select(target)
+    .select(".graph")
+    .selectAll("circle")
+    .data(students, function(student, index)
+         {
+        return student.picture
+    })
+    
+    circles.enter()
+    .appennd("circle")
+    
+    circles.exit()
+    .remove()
+    
     d3.select(target).select(".graph")
     .selectAll("circle")
-    .data(students)
-    .enter()
-    .append("circle")
+    .transition()
+    .duration(dur)
     .attr("cx",function(student)
     {
         return xScale(getMeanGrade(student[xProp]));    
